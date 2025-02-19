@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Nikkah Countdown</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://1-notes.com/images/ishidatami.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 2em;
+        }
+        #countdown div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #countdown span {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .sakura {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .sakura span {
+            position: absolute;
+            top: -10%;
+            width: 0.8vw;
+            height: 0.4vw;
+            border-radius: 5% 80% 10% 80%;
+            background-color: #ffb6c1;
+            animation: fall linear infinite, sway linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+        @keyframes sway {
+            50% {
+                transform: translateX(20vw);
+            }
+            100% {
+                transform: translateX(-20vw);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>Countdown to Our Nikkah Day</h1>
+        <div id="countdown">
+            <div><span id="days">0</span>Days</div>
+            <div><span id="hours">0</span>Hours</div>
+            <div><span id="minutes">0</span>Minutes</div>
+            <div><span id="seconds">0</span>Seconds</div>
+        </div>
+    </div>
+    <div class="sakura"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set the date of your wedding
+            const weddingDate = new Date('2025-04-05T00:00:00');
+
+            // Update the countdown every second
+            setInterval(() => {
+                const now = new Date();
+                const timeDifference = weddingDate - now;
+
+                if (timeDifference <= 0) {
+                    document.getElementById('countdown').innerHTML = 'Congratulations! Today is our Nikkah day!';
+                    return;
+                }
+
+                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            }, 1000);
+
+            // Sakura falling effect
+            const sakuraContainer = document.querySelector('.sakura');
+            const totalSakura = 50; // Number of sakura petals
+
+            for (let i = 0; i < totalSakura; i++) {
+                const sakura = document.createElement('span');
+                const delay = Math.random() * 10;
+                const fallDuration = (Math.random() * 5) + 5;
+                const swayDuration = (Math.random() * 5) + 5;
+                const size = (Math.random() * 0.7) + 0.3;
+                const left = Math.random() * 100;
+
+                sakura.style.left = `${left}vw`;
+                sakura.style.animationDelay = `${delay}s`;
+                sakura.style.animationDuration = `${fallDuration}s, ${swayDuration}s`;
+                sakura.style.width = `${size}em`;
+                sakura.style.height = `${size / 2}em`;
+
+                sakuraContainer.appendChild(sakura);
+            }
+        });
+    </script>
+</body>
+</html>
